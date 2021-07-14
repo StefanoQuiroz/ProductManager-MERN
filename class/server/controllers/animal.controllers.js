@@ -40,8 +40,8 @@ const deleteAnimal = (req,res) => {
     Animal.deleteOne({_id:req.params.id})
         .then(result => res.json(result))
         .catch(error => {
-            console.error(error);
             res.json(error);
+            res.sendStatus(202);
         })
 }
 
