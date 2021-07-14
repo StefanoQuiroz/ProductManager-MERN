@@ -2,28 +2,30 @@
 GET http://localhost:8000/api/animales
 
 ###GET A SINGE USER
-GET http://localhost:8000/api/animales/60ef1c3e2620d842c85396f5
+GET http://localhost:8000/api/animales/60ef68e75788f9013c2245d8
 
 ###CREATE A NEW USER
 POST http://localhost:8000/api/animales/new
 Content-Type: application/json
 
 {
-    "nombre" : "Bobbyyyyyy",
-    "cantidadPatas" : "Cuatro", 
-    "color" : "Gris"
+    "nombre" : "Bobby",
+    "tipo" : "Perro", 
+    "color" : "Sal y Pimienta",
+    "tamanho" : "Mediano"
 }
 
 ###uPDATE AN ANIMAL
-PUT http://localhost:8000/api/animales/update/60ef1c6a2620d842c85396f7
+PUT http://localhost:8000/api/animales/update/60ef68ce5788f9013c2245d6
 Content-Type: application/json
 
 {
-    "nombre" : "Bobby",
-    "cantidadPatas" : "Cuatro",
-    "color" : "Sal y Pimienta"
+    "nombre" : "Firulais I",
+    "tipo" : "Perro", 
+    "color" : "Gris",
+    "tamanho" : "Grande"
 }
 
 ###DELETE AN ANIMAL
-DELETE http://localhost:8000/api/animales/delete/60ef1d542620d842c85396ff
+DELETE http://localhost:8000/api/animales/delete/60ef69195788f9013c2245de
 
