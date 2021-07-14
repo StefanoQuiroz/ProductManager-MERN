@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "nombre" : "Bobbyyyyyy",
-    "cantidadPatas" : "Cuatro",
+    "cantidadPatas" : "Cuatro", 
     "color" : "Gris"
 }
 
