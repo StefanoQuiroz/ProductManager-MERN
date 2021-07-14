@@ -12,7 +12,7 @@ const AnimalSchema = new mongoose.Schema({
         max: [4, "No existe animal con mas de 4 patas"]
     },
     color: String
-})
+}, {timestamps:true});
 
 const Animal = mongoose.model("animales", AnimalSchema);
 
