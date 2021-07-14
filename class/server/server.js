@@ -6,7 +6,7 @@ const PORT = process.env.PORT;
 
 //connect mongoDB with Mongoose
 const connectDB = require('./config/animals.config');
-//connectDB()
+connectDB()
 
 //middlewares
 app.use(cors());
