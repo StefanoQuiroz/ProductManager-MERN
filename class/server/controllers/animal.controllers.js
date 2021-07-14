@@ -41,7 +41,7 @@ const deleteAnimal = (req,res) => {
         .then(result => res.json(result))
         .catch(error => {
             console.error(error);
-            return res.json(error);
+            res.json(error);
         })
 }
 
