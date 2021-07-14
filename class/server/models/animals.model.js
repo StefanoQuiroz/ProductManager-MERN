@@ -4,14 +4,19 @@ const AnimalSchema = new mongoose.Schema({
     nombre : {
         type: String,
         required: [true, "El nombre del animal es requerido"],
-        minlength: [2, "El nombre del animal debe ser mayor a 2 caracteres"]
+        //minlength: [2, "El nombre del animal debe ser mayor a 2 caracteres"]
     },
-    cantidadPatas: {
+    tipo: {
         type: String,
-        required : [true, "Ingrese la cantidad de patas"],
-        max: [4, "No existe animal con mas de 4 patas"]
+        required : [true, "seleccione el tipo del animal"],
+        //max: [4, "No existe animal con mas de 4 patas"]
     },
-    color: String
+    color: {
+        type: String,
+        required : [true, "seleccione el color del animal"]
+    },
+    tamanho : String
+    
 }, {timestamps:true});
 
 const Animal = mongoose.model("animales", AnimalSchema);
