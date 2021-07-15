@@ -9,7 +9,7 @@ const connectDB = require('./config/animals.config');
 connectDB()
 
 //middlewares
-app.use(cors());
+app.use(cors({credential: false, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
