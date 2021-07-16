@@ -76,8 +76,16 @@ const AnimalForm = (props) => {
     const crearAnimal = (event) => {
         axios.post("http://localhost:8000/api/animales/new", input)
             .then(response => {
-                volver(event);
-                setDatos(datos.concat([response.data.data]));
+                if(response.data.data){
+                    volver(event);
+                    setDatos(datos.concat([response.data.data]));
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error al crear los datos",
+                        text: response.data.error.message
+                    })
+                }
             })
             .catch (err => Swal.fire({
                 icon: 'error',
