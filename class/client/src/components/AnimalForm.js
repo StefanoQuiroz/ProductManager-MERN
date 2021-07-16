@@ -54,22 +54,26 @@ const AnimalForm = (props) => {
         })
     }
 
-    /* const editar = () => {
-
+    const editar = () => {
     }
 
-    const crear = () => {
-
-    } */
+    const crearAnimal = (event) => {
+        axios.post("http://localhost:8000/api/animales/new", input)
+            .then(response => volver(event))
+            .catch (err => Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ha ocurrido un problema al crear un nuevo animal usuario'
+            }) )
+    }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        /* if(id){
+        if(id){
             editar();
         } else{
-            crear();
-        } */
-        //console.log(input)
+            crearAnimal();
+        }
     }
 
 
@@ -83,15 +87,15 @@ const AnimalForm = (props) => {
                 <Col md={6}>
                     <FormGroup>
                         <Label for="nombre">Nombre del Animal</Label>
-                        <Input type="text" name="nombre" id="nombre" value={animal.nombre} onChange={onChange}/>
+                        <Input type="text" name="nombre" id="nombre" value={animal.nombre} onChange={onChange} disabled={ver}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="tipo">Tipo del Animal</Label>
-                        <Input type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange}>
+                        <Input type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange} disabled={ver}>
                             {tipo && tipo.map((options, index)=>(
-                            <option key={index} value={options._id}>
+                            <option key={index} value={options.tipo}>
                                 {options.tipo}
                             </option>))}
                         </Input>
@@ -102,13 +106,13 @@ const AnimalForm = (props) => {
                 <Col md={6}>
                     <FormGroup>
                         <Label for="color">Color del Animal</Label>
-                        <Input type="text" name="color" id="color" value={animal.color} onChange={onChange}/>
+                        <Input type="text" name="color" id="color" value={animal.color} onChange={onChange} disabled={ver}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="tam">Tamaño del Animal</Label>
-                        <Input type="select" name="tamanho" id="tam" value={animal.tamanho} onChange={onChange}>
+                        <Input type="select" name="tamanho" id="tam" value={animal.tamanho} onChange={onChange} disabled={ver}>
                             <option>Seleccione</option>
                             <option value="pequeho">Pequeño</option>
                             <option value="mediano">Mediano</option>
