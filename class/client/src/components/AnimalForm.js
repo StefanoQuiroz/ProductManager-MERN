@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Container, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 
 const AnimalForm = (props) => {
     const history = useHistory();
-    const {accion, crear, modificar, cerrar, id} = props;
+    const {ver, crear, modificar, cerrar} = props;
+
+    const {id} = useParams();
     
     const [input, setInput] = useState({
         nombre:"",
@@ -31,14 +33,14 @@ const AnimalForm = (props) => {
         
         if(id){
             axios.get(`http://localhost:8000/api/animales/${id}`)
-                .then(response => setTipo(response.data.data))
+                .then(response => setAnimal(response.data.data))
                 .catch(err => Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     text: `No se encuentra el tipo de animal con el id: ${id} requerido`
                 }))
         }
-    },[])
+    },[id])
 
     const volver = (event) => {
         history.push(`/`);
@@ -74,7 +76,7 @@ const AnimalForm = (props) => {
     return (
         <Container>
             <Row>
-                <h1>{accion === "VER" ? `Ver ${animal.nombre}` : accion === "MOD" ? `Editar ${animal.nombre}` : `Nuevo Animal`}</h1>
+                <h1>{ver ? `Ver ${animal.nombre}` : (modificar ? `Editar ${animal.nombre}` : `Nuevo Animal`)}</h1>
             </Row>
             <Form onSubmit={onSubmit}>
             <Row form>
