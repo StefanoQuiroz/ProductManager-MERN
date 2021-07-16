@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Table, Row, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faTrash, faPlus} from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash, faPen} from '@fortawesome/free-solid-svg-icons';
 
 const AnimalList = (props) => {
     const {animales} = props;
@@ -32,7 +32,7 @@ const AnimalList = (props) => {
                         <tr key={index}>
                             <td>
                                 <Button color="primary" style={{margin:'2px'}} onClick={(event) => ver(event, items._id)}><FontAwesomeIcon icon={faEye}/> Ver</Button>
-                                <Button color="secondary" style={{margin:'2px'}} onClick={(event) => modificar(event, items._id)}><FontAwesomeIcon icon={faPlus}/> Editar</Button>
+                                <Button color="secondary" style={{margin:'2px'}} onClick={(event) => modificar(event, items._id)}><FontAwesomeIcon icon={faPen}/> Editar</Button>
                             </td>
                             <td>{items.nombre}</td>
                             <td>{items.tipo}</td>
