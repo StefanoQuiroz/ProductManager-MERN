@@ -1,10 +1,14 @@
 import React from 'react';
-import { Table, Col } from 'reactstrap';
+import { Table, Row } from 'reactstrap';
 
 const AnimalList = (props) => {
     const {animales} = props;
+    const history = useHistory()
+    const ver = (event, id){
+
+    }
     return (
-        <Col>
+        <Row>
             <Table>
                 <thead>
                     <tr>
@@ -21,14 +25,13 @@ const AnimalList = (props) => {
                             <td>&nbsp;</td>
                             <td>{items.nombre}</td>
                             <td>{items.tipo}</td>
-                            {/* <td>{items.tipo.codigo}</td> */}
                             <td>{items.color}</td>
                             <td>{items.tamanho}</td>
                         </tr>
                     ))}
                 </tbody>
             </Table>            
-        </Col>
+        </Row>
     );
 }
 
