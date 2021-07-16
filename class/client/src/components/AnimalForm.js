@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 const AnimalForm = (props) => {
     const history = useHistory();
-    const {ver, crear, modificar, cerrar} = props;
+    const {ver, crear, modificar } = props;
     const useNombre = useRef(null);
     const useTipo = useRef(null);
     const useColor = useRef(null);
@@ -20,11 +20,11 @@ const AnimalForm = (props) => {
         color: "",
         tamanho: ""
     });
-    
-    const [animal, setAnimal] = useState({});
-    
+       
     const [tipo, setTipo] = useState([]);
     
+    const {datos, setDatos} = props
+
     useEffect(()=>{
         axios.get("http://localhost:8000/api/animales")
             .then(response => setTipo(response.data.data))
@@ -36,7 +36,7 @@ const AnimalForm = (props) => {
         
         if(id){
             axios.get(`http://localhost:8000/api/animales/${id}`)
-                .then(response => setAnimal(response.data.data))
+                .then(response => setInput(response.data.data))
                 .catch(err => Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -57,12 +57,28 @@ const AnimalForm = (props) => {
         })
     }
 
-    const editar = () => {
+    const editar = (event) => {
+        axios.put(`http://localhost:8000/api/animales/update/${id}`, input)
+            .then(response => {
+                const index = datos.findIndex( res => res._id === id);
+                datos.splice(index, 1, input);//primero agrega
+                setDatos(datos); // luego modifica
+                volver(event) // luego presenta
+
+            })
+            .catch(err => Swal.fire({
+                icon: 'error',
+                title:'Error',
+                text:'Ha ocurrido un problema al actualizar los datos del animal'
+            }))
     }
 
     const crearAnimal = (event) => {
         axios.post("http://localhost:8000/api/animales/new", input)
-            .then(response => volver(event))
+            .then(response => {
+                volver(event);
+                setDatos(datos.concat([response.data.data]));
+            })
             .catch (err => Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -87,25 +103,26 @@ const AnimalForm = (props) => {
     return (
         <Container>
             <Row>
-                <h1>{ver ? `Ver ${animal.nombre}` : (modificar ? `Editar ${animal.nombre}` : `Nuevo Animal`)}</h1>
+                <h1>{ver ? `Ver ${input.nombre}` : (modificar ? `Editar ${input.nombre}` : `Nuevo Animal`)}</h1>
             </Row>
             <Form onSubmit={onSubmit}>
             <Row form>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="nombre">Nombre del Animal</Label>
-                        <Input ref={useNombre} type="text" name="nombre" id="nombre" value={animal.nombre} onChange={onChange} disabled={ver}/>
+                        <Input ref={useNombre} type="text" name="nombre" id="nombre" value={input.nombre} onChange={onChange} disabled={ver}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="tipo">Tipo del Animal</Label>
-                        <Input ref={useTipo} type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange} disabled={ver}>
+                        <Input ref={useTipo} type="text" name="tipo" id="tipo" value={input.tipo} onChange={onChange} disabled={ver}/>
+                        {/* <Input ref={useTipo} type="select" name="tipo" id="tipo" value={input.tipo} onChange={onChange} disabled={ver}>
                             {tipo && tipo.map((options, index)=>(
                             <option key={index} value={options.tipo}>
                                 {options.tipo}
                             </option>))}
-                        </Input>
+                        </Input> */}
                     </FormGroup>
                 </Col>
                 </Row>             
@@ -113,13 +130,13 @@ const AnimalForm = (props) => {
                 <Col md={6}>
                     <FormGroup>
                         <Label for="color">Color del Animal</Label>
-                        <Input ref={useColor} type="text" name="color" id="color" value={animal.color} onChange={onChange} disabled={ver}/>
+                        <Input ref={useColor} type="text" name="color" id="color" value={input.color} onChange={onChange} disabled={ver}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="tam">Tamaño del Animal</Label>
-                        <Input ref={useTamanho} type="select" name="tamanho" id="tam" value={animal.tamanho} onChange={onChange} disabled={ver}>
+                        <Input ref={useTamanho} type="select" name="tamanho" id="tam" value={input.tamanho} onChange={onChange} disabled={ver}>
                             <option>Seleccione</option>
                             <option value="Pequeho">Pequeño</option>
                             <option value="Mediano">Mediano</option>
