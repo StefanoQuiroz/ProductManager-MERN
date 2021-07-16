@@ -1,12 +1,20 @@
 import React from 'react';
-import { Table, Row } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
+import { Table, Row, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faTrash, faPlus} from '@fortawesome/free-solid-svg-icons';
 
 const AnimalList = (props) => {
     const {animales} = props;
     const history = useHistory()
-    const ver = (event, id){
-
+    const ver = (event, id) => {
+        history.push(`/ver/${id}`)
     }
+
+    const modificar = (event, id) => {
+        history.push(`/modificar/${id}`);
+    }
+    
     return (
         <Row>
             <Table>
@@ -22,7 +30,10 @@ const AnimalList = (props) => {
                 <tbody>
                     {animales && animales.map((items, index) => (
                         <tr key={index}>
-                            <td>&nbsp;</td>
+                            <td>
+                                <Button color="primary" style={{margin:'2px'}} onClick={(event) => ver(event, items._id)}><FontAwesomeIcon icon={faEye}/> Ver</Button>
+                                <Button color="secondary" style={{margin:'2px'}} onClick={(event) => modificar(event, items._id)}><FontAwesomeIcon icon={faPlus}/> Editar</Button>
+                            </td>
                             <td>{items.nombre}</td>
                             <td>{items.tipo}</td>
                             <td>{items.color}</td>
