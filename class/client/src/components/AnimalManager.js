@@ -4,7 +4,9 @@ import Swal from 'sweetalert2';
 import AnimalList from './AnimalList';
 import AnimalForm from './AnimalForm';
 import { Row } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Route, useRouteMatch} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const AnimalManager = () => {
 
@@ -24,6 +26,9 @@ const AnimalManager = () => {
      return (
         <Row>
             <Router>
+            <Link to={`/crear`}>
+                <FontAwesomeIcon icon={faPlus}/>
+            </Link>
                 <Switch>
                     <Route path={`/crear`}>
                         <AnimalForm crear={true}/>
