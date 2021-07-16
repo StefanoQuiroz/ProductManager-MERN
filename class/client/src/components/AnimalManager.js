@@ -4,9 +4,12 @@ import Swal from 'sweetalert2';
 import AnimalList from './AnimalList';
 import AnimalForm from './AnimalForm';
 import { Row } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useRouteMatch} from 'react-router-dom';
 
 const AnimalManager = () => {
+
+    //const {path, url} = useRouteMatch();
+
     const [datos, setDatos] = useState([]);
     useEffect(() => {
         axios.get("http://localhost:8000/api/animales")
@@ -22,16 +25,16 @@ const AnimalManager = () => {
         <Row>
             <Router>
                 <Switch>
-                    <Route path="/crear">
+                    <Route path={`/crear`}>
                         <AnimalForm crear={true}/>
                     </Route>
-                    <Route path="/ver/:id">
+                    <Route path={`/ver/:id`}>
                         <AnimalForm ver={true}/>
                     </Route>
-                    <Route path="/modificar/:id">
+                    <Route path={`/modificar/:id`} >
                         <AnimalForm modificar={true}/>
                     </Route>
-                    <Route path="/">
+                    <Route path={`/`}>
                         <AnimalList animales={datos}/>
                     </Route>
                 </Switch>
