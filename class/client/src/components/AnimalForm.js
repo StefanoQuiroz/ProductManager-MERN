@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Container, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -8,7 +8,10 @@ import { useHistory, useParams } from 'react-router-dom';
 const AnimalForm = (props) => {
     const history = useHistory();
     const {ver, crear, modificar, cerrar} = props;
-
+    const useNombre = useRef(null);
+    const useTipo = useRef(null);
+    const useColor = useRef(null);
+    const useTamanho = useRef(null);
     const {id} = useParams();
     
     const [input, setInput] = useState({
@@ -74,6 +77,10 @@ const AnimalForm = (props) => {
         } else{
             crearAnimal();
         }
+        useNombre.current.value="";
+        useTipo.current.value="";
+        useColor.current.value="";
+        useTamanho.current.value="";
     }
 
 
@@ -87,13 +94,13 @@ const AnimalForm = (props) => {
                 <Col md={6}>
                     <FormGroup>
                         <Label for="nombre">Nombre del Animal</Label>
-                        <Input type="text" name="nombre" id="nombre" value={animal.nombre} onChange={onChange} disabled={ver}/>
+                        <Input ref={useNombre} type="text" name="nombre" id="nombre" value={animal.nombre} onChange={onChange} disabled={ver}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="tipo">Tipo del Animal</Label>
-                        <Input type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange} disabled={ver}>
+                        <Input ref={useTipo} type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange} disabled={ver}>
                             {tipo && tipo.map((options, index)=>(
                             <option key={index} value={options.tipo}>
                                 {options.tipo}
@@ -106,17 +113,17 @@ const AnimalForm = (props) => {
                 <Col md={6}>
                     <FormGroup>
                         <Label for="color">Color del Animal</Label>
-                        <Input type="text" name="color" id="color" value={animal.color} onChange={onChange} disabled={ver}/>
+                        <Input ref={useColor} type="text" name="color" id="color" value={animal.color} onChange={onChange} disabled={ver}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
                     <FormGroup>
                         <Label for="tam">Tamaño del Animal</Label>
-                        <Input type="select" name="tamanho" id="tam" value={animal.tamanho} onChange={onChange} disabled={ver}>
+                        <Input ref={useTamanho} type="select" name="tamanho" id="tam" value={animal.tamanho} onChange={onChange} disabled={ver}>
                             <option>Seleccione</option>
-                            <option value="pequeho">Pequeño</option>
-                            <option value="mediano">Mediano</option>
-                            <option value="grande">Grande</option>
+                            <option value="Pequeho">Pequeño</option>
+                            <option value="Mediano">Mediano</option>
+                            <option value="Grande">Grande</option>
                         </Input>
                     </FormGroup>
                 </Col>
