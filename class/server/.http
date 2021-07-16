@@ -9,7 +9,7 @@ POST http://localhost:8000/api/animales/new
 Content-Type: application/json
 
 {
-    "nombre" : "Bobby",
+    "nombre" : "Bobbyy",
     "tipo" : "Perro", 
     "color" : "Sal y Pimienta",
     "tamanho" : "Mediano"
