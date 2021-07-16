@@ -13,11 +13,13 @@ const AnimalForm = (props) => {
         color: "",
         tamanho: ""
     });
+    
     const [animal, setAnimal] = useState({});
+    
     const [tipo, setTipo] = useState([]);
     
     useEffect(()=>{
-        axios.get("http://localhost:8000/api/animales")
+        axios.get("http://localhost:8000api/animales")
             .then(response => setTipo(response.data.data))
             .catch(err => Swal.fire({
                 icon: 'error',
@@ -71,6 +73,7 @@ const AnimalForm = (props) => {
                     <FormGroup>
                         <Label for="tipo">Tipo del Animal</Label>
                         <Input type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange}>
+                            <option>Seleccione</option>
                             {tipo && tipo.map((options, index)=>(
                             <option key={index} value={options._id}>
                                 {options.tipo}
@@ -90,6 +93,7 @@ const AnimalForm = (props) => {
                     <FormGroup>
                         <Label for="tam">Tamaño del Animal</Label>
                         <Input type="select" name="tamanho" id="tam" value={animal.tamanho} onChange={onChange}>
+                            <option>Seleccione</option>
                             <option value="pequeho">Pequeño</option>
                             <option value="mediano">Mediano</option>
                             <option value="grande">Grande</option>
