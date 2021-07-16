@@ -9,14 +9,14 @@ POST http://localhost:8000/api/animales/new
 Content-Type: application/json
 
 {
-    "nombre" : "Bobbyy",
-    "tipo" : "Perro", 
-    "color" : "Sal y Pimienta",
-    "tamanho" : "Mediano"
+    "nombre" : "Zé Carioca",
+    "tipo" : "Loro", 
+    "color" : "Verde-amarelo",
+    "tamanho" : "Pequenho"
 }
 
 ###uPDATE AN ANIMAL
-PUT http://localhost:8000/api/animales/update/60ef68ce5788f9013c2245d6
+PUT http://localhost:8000/api/animales/update/60ef68e75788f9013c2245d8
 Content-Type: application/json
 
 {
@@ -27,5 +27,5 @@ Content-Type: application/json
 }
 
 ###DELETE AN ANIMAL
-DELETE http://localhost:8000/api/animales/delete/60f10dd4fa9fc554d05b99fc
+DELETE http://localhost:8000/api/animales/delete/60f11761c1ba294fa015a23f
 
