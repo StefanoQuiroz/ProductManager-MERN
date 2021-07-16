@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import AnimalList from './AnimalList';
+import AnimalForm from './AnimalForm';
 import { Row } from 'reactstrap';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 const AnimalManager = () => {
     const [datos, setDatos] = useState([]);
@@ -18,7 +20,22 @@ const AnimalManager = () => {
 
      return (
         <Row>
-            <AnimalList animales={datos}/>
+            <Router>
+                <Switch>
+                    <Route path="/crear">
+                        <AnimalForm crear={true}/>
+                    </Route>
+                    <Route path="/ver/:id">
+                        <AnimalForm ver={true}/>
+                    </Route>
+                    <Route path="/modificar/:id">
+                        <AnimalForm modificar={true}/>
+                    </Route>
+                    <Route path="/">
+                        <AnimalList animales={datos}/>
+                    </Route>
+                </Switch>
+            </Router>
         </Row>
     );
 }
