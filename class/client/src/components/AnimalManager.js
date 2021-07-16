@@ -31,16 +31,16 @@ const AnimalManager = () => {
             </Link>
                 <Switch>
                     <Route path={`/crear`}>
-                        <AnimalForm crear={true}/>
+                        <AnimalForm crear={true}  datos={datos} setDatos={setDatos}/>
                     </Route>
                     <Route path={`/ver/:id`}>
                         <AnimalForm ver={true}/>
                     </Route>
                     <Route path={`/modificar/:id`} >
-                        <AnimalForm modificar={true}/>
+                        <AnimalForm modificar={true} datos={datos} setDatos={setDatos}/>
                     </Route>
                     <Route path={`/`}>
-                        <AnimalList animales={datos}/>
+                        <AnimalList datos={datos} setDatos={setDatos}/>
                     </Route>
                 </Switch>
             </Router>
