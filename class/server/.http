@@ -27,5 +27,5 @@ Content-Type: application/json
 }
 
 ###DELETE AN ANIMAL
-DELETE http://localhost:8000/api/animales/delete/60ef69195788f9013c2245de
+DELETE http://localhost:8000/api/animales/delete/60f10dd4fa9fc554d05b99fc
 
