@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Container, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useHistory } from 'react-router-dom';
 
 
 const AnimalForm = (props) => {
+    const history = useHistory();
     const {accion, crear, modificar, cerrar, id} = props;
     
     const [input, setInput] = useState({
@@ -19,15 +21,28 @@ const AnimalForm = (props) => {
     const [tipo, setTipo] = useState([]);
     
     useEffect(()=>{
-        axios.get("http://localhost:8000api/animales")
+        axios.get("http://localhost:8000/api/animales")
             .then(response => setTipo(response.data.data))
             .catch(err => Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 text: 'No se encuentra el tipo de animal requerido!'
             }))
+        
+        if(id){
+            axios.get(`http://localhost:8000/api/animales/${id}`)
+                .then(response => setTipo(response.data.data))
+                .catch(err => Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: `No se encuentra el tipo de animal con el id: ${id} requerido`
+                }))
+        }
     },[])
 
+    const volver = (event) => {
+        history.push(`/`);
+    }
 
     const onChange = (event) => {
         const {name, value} = event.target;
@@ -73,7 +88,6 @@ const AnimalForm = (props) => {
                     <FormGroup>
                         <Label for="tipo">Tipo del Animal</Label>
                         <Input type="select" name="tipo" id="tipo" value={animal.tipo} onChange={onChange}>
-                            <option>Seleccione</option>
                             {tipo && tipo.map((options, index)=>(
                             <option key={index} value={options._id}>
                                 {options.tipo}
@@ -103,9 +117,9 @@ const AnimalForm = (props) => {
                 </Row>
                 <Row form>
                     <Col>
-                        { crear && <Button type="submit">Crear</Button>}
-                        { modificar && <Button type="submit">Modificar</Button>}
-                        <Button type="button">Cerrar</Button>
+                        { crear && <Button style={{margin:'2px'}} type="submit">Crear</Button>}
+                        { modificar && <Button style={{margin:'2px'}} type="submit">Modificar</Button>}
+                        <Button style={{margin:'2px'}} type="button" onClick={(event) => volver(event)}>Home</Button>
                     </Col>
                 </Row>             
             </Form>
