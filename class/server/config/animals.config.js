@@ -5,10 +5,10 @@ const connectDB = async() => {
         await mongoose.connect(db, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true
-            //useFindAndModify: false
+            useCreateIndex: true,
+            useFindAndModify: false
         })
-        console.log(`Established connection to the database`);
+        console.log(` 2 : Established connection to the database`);
     }
     catch(err){
         console.error(err);
