@@ -19,7 +19,7 @@ const AnimalManager = () => {
         .catch(err => Swal.fire({
             icon: 'error',
             title: 'Error al obtener los datos',
-            text: 'Ocurrió un problema al ntentar obtener el listado de animales'
+            text: 'Ocurrió un problema al intentar obtener el listado de animales'
         }));
     }, [])
 

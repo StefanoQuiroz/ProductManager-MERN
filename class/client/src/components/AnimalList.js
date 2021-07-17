@@ -24,7 +24,7 @@ const AnimalList = (props) => {
             text: "¿Esta seguro quedesea eliminar el animal?",
             showCancelButton: true
         }).then(result => {
-            if(result.value){
+            if(result){
                 axios.delete(` http://localhost:8000/api/animales/delete/${id}`)
                     .then(response => {
                         const deleteData = datos.filter(response => response._id !== id);
@@ -49,6 +49,7 @@ const AnimalList = (props) => {
                         <th>Tipo</th>
                         <th>Color</th>
                         <th>Tamaño</th>
+                        <th>Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +64,7 @@ const AnimalList = (props) => {
                             <td>{items.tipo}</td>
                             <td>{items.color}</td>
                             <td>{items.tamanho}</td>
+                            <td>{items.fecha}</td>
                         </tr>
                     ))}
                 </tbody>

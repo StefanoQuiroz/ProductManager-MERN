@@ -1,38 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
+import { Form, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useHistory, useParams } from 'react-router-dom';
 
 
 const AnimalForm = (props) => {
-    const history = useHistory();
     const {ver, crear, modificar } = props;
+    const {datos, setDatos} = props
     const useNombre = useRef(null);
     const useTipo = useRef(null);
     const useColor = useRef(null);
     const useTamanho = useRef(null);
+    const useFecha = useRef(null);
+    const history = useHistory();
     const {id} = useParams();
     
     const [input, setInput] = useState({
         nombre:"",
         tipo: "",
         color: "",
-        tamanho: ""
+        tamanho: "",
+        fecha: new Date()
     });
        
-    const [tipo, setTipo] = useState([]);
+    //const [tipo, setTipo] = useState([]);
     
-    const {datos, setDatos} = props
+    const volver = (event) => {
+        history.push(`/`);
+    }
 
     useEffect(()=>{
-        axios.get("http://localhost:8000/api/animales")
+        /* axios.get("http://localhost:8000/api/animales")
             .then(response => setTipo(response.data.data))
             .catch(err => Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 text: 'No se encuentra el tipo de animal requerido!'
-            }))
+            })) */
         
         if(id){
             axios.get(`http://localhost:8000/api/animales/${id}`)
@@ -45,10 +50,46 @@ const AnimalForm = (props) => {
         }
     },[id])
 
-    const volver = (event) => {
-        history.push(`/`);
-    }
 
+    
+    const editar = (event) => {
+        axios.put(`http://localhost:8000/api/animales/update/${id}`, input)
+        .then(response => {
+            const index = datos.findIndex( res => res._id === id);
+            datos.splice(index, 1, input);//primero agrega lo reemplaza en el index
+            setDatos(datos); // luego modifica
+            volver(event) // luego presenta
+            
+        })
+        .catch(err => Swal.fire({
+            icon: 'error',
+            title:'Error',
+            text:'Ha ocurrido un problema al actualizar los datos del animal'
+        }))
+    }
+    
+    const crearAnimal = (event) => {
+        axios.post("http://localhost:8000/api/animales/new", input)
+        .then(response => {
+            if(response.data.data){
+                setDatos(datos.concat([response.data.data]));
+                volver(event);
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error al crear los datos",
+                    text: response.data.error.message
+                })
+            }
+        })
+
+        .catch (err => Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ha ocurrido un problema al crear un nuevo animal usuario'
+        }) )
+    }
+    
     const onChange = (event) => {
         const {name, value} = event.target;
         setInput({
@@ -57,59 +98,23 @@ const AnimalForm = (props) => {
         })
     }
 
-    const editar = (event) => {
-        axios.put(`http://localhost:8000/api/animales/update/${id}`, input)
-            .then(response => {
-                const index = datos.findIndex( res => res._id === id);
-                datos.splice(index, 1, input);//primero agrega
-                setDatos(datos); // luego modifica
-                volver(event) // luego presenta
-
-            })
-            .catch(err => Swal.fire({
-                icon: 'error',
-                title:'Error',
-                text:'Ha ocurrido un problema al actualizar los datos del animal'
-            }))
-    }
-
-    const crearAnimal = (event) => {
-        axios.post("http://localhost:8000/api/animales/new", input)
-            .then(response => {
-                if(response.data.data){
-                    volver(event);
-                    setDatos(datos.concat([response.data.data]));
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error al crear los datos",
-                        text: response.data.error.message
-                    })
-                }
-            })
-            .catch (err => Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Ha ocurrido un problema al crear un nuevo animal usuario'
-            }) )
-    }
-
     const onSubmit = (event) => {
         event.preventDefault();
         if(id){
-            editar();
+            editar(event);
         } else{
-            crearAnimal();
+            crearAnimal(event);
         }
         useNombre.current.value="";
         useTipo.current.value="";
         useColor.current.value="";
         useTamanho.current.value="";
+        useFecha.current.value="";
     }
 
 
     return (
-        <Container>
+        <Row>
             <Row>
                 <h1>{ver ? `Ver ${input.nombre}` : (modificar ? `Editar ${input.nombre}` : `Nuevo Animal`)}</h1>
             </Row>
@@ -146,12 +151,20 @@ const AnimalForm = (props) => {
                         <Label for="tam">Tamaño del Animal</Label>
                         <Input ref={useTamanho} type="select" name="tamanho" id="tam" value={input.tamanho} onChange={onChange} disabled={ver}>
                             <option>Seleccione</option>
-                            <option value="Pequeho">Pequeño</option>
+                            <option value="Pequeño">Pequeño</option>
                             <option value="Mediano">Mediano</option>
                             <option value="Grande">Grande</option>
                         </Input>
                     </FormGroup>
                 </Col>
+                </Row>
+                <Row form>
+                    <Col md={6}>
+                        <FormGroup>
+                            <Label for="fecha">Fecha</Label>
+                            <Input ref={useFecha} type="datetime-local" name="fecha" id="fecha" value={input.fecha} onChange={onChange} disabled={ver}/>
+                        </FormGroup>
+                    </Col>
                 </Row>
                 <Row form>
                     <Col>
@@ -161,7 +174,7 @@ const AnimalForm = (props) => {
                     </Col>
                 </Row>             
             </Form>
-        </Container>
+        </Row>
     );
 }
 
