@@ -3,7 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT;
-
+//
 //connect mongoDB with Mongoose
 const connectDB = require('./config/animals.config');
 connectDB()
