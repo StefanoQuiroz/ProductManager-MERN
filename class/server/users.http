@@ -1,0 +1,33 @@
+###GET ALL USERS
+GET http://localhost:8000/api/usuarios
+
+###GET A SINGE USER
+GET http://localhost:8000/api/usuarios/60f4fbea40509107bc5af591
+
+###CREATE A NEW USER
+POST http://localhost:8000/api/usuarios/new
+Content-Type: application/json
+
+{
+    "nombre" : "Stefano",
+    "apellido" : "Quiroz", 
+    "email" : "stefano@gmail.com",
+    "password" : "123456789",
+    "confirmPassword" : "123456789"
+}
+
+###UPDATE AN USER
+PUT http://localhost:8000/api/usuarios/update/60f4fbea40509107bc5af591
+Content-Type: application/json
+
+{
+    "nombre" : "Stefano",
+    "apellido" : "Quirós", 
+    "email" : "stefano@gmail.com",
+    "password" : "123456789",
+    "confirmPassword" : "123456789"
+}
+
+###DELETE AN ANIMAL
+DELETE http://localhost:8000/api/usuarios/delete/(id)
+
