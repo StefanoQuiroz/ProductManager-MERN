@@ -3,13 +3,16 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT;
+const cookieParser = require('cookie-parser');
+
 //
 //connect mongoDB with Mongoose
 const connectDB = require('./config/animals.config');
 connectDB()
 
 //middlewares
-app.use(cors({credential: false, origin: 'http://localhost:3000'}));
+app.use(cookieParser())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
