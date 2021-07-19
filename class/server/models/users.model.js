@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Debe ingresar el password del usuario"],
         minlength: [8, "El password debe tener mas de 8 caracteres"]
     },
-}, {timestamps:true})
+}, {timestamps:true}) 
 
 UserSchema.virtual('confirmPassword')
     .get(() => this._confirmPassword)
@@ -41,7 +41,7 @@ UserSchema.pre('save', function(next){
         .then(hash => {
             this.password = hash;
             next();
-        })
+        });
 })
 
 

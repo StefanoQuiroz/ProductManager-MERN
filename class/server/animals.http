@@ -2,7 +2,7 @@
 GET http://localhost:8000/api/animales
 
 ###GET A SINGE USER
-GET http://localhost:8000/api/animales/60ef68e75788f9013c2245d8
+GET http://localhost:8000/api/animales/60f1daed45c7dc22a80b9807
 
 ###CREATE A NEW USER
 POST http://localhost:8000/api/animales/new

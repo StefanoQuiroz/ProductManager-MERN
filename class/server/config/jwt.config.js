@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secretKey = "claveSecreta";
+const secretKey = "clave Secreta";
 
 const authenticate = (req, res, next) => {
     jwt.verify(req.cookies.usertoken, secretKey, (err, payload) => {

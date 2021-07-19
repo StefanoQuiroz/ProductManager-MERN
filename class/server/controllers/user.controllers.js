@@ -1,4 +1,8 @@
 const Usuario = require('../models/users.model');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { secretKey } = require('../config/jwt.config');
+
 
 /* const register = (req, res) => {
     const user = new Usuario(req.body);
@@ -57,4 +61,38 @@ const deleteUser = (req,res) => {
         })
 }
 
-module.exports = {findUser, findSingleUser, createUser, updateUser, deleteUser};
+const login = (req, res) => {
+    Usuario.findOne({email: req.body.email})
+         .then(result => {
+            if(result === null){
+                res.json({error: true, message: "User not exists"})
+            } else {
+                bcrypt.compare(req.body.password, result.password)
+                    .then(isValid => {
+                        if(isValid){
+                            const loggedUser = {
+                                _id: result._id,
+                                nombre: result.nombre,
+                                apellido: result.apellido,
+                                email: result.email
+                            }
+                            const token = jwt.sign(loggedUser, secretKey);
+                            res.cookie("usertoken", token, secretKey, {httpOnly: true})
+                                .json({message:"logIn", data: loggedUser})
+
+                        } else {
+                            res.json({error: true, message: "Invalidate password"})
+                        }
+
+                    })
+                    .catch(err => res.json({
+                        error: err, message:"User and passwords invalidate"
+                    }))
+            }
+         })
+         .catch(err => {
+             res.json({error: err, message: "User or password invalidate"});
+         })
+}
+
+module.exports = {findUser, findSingleUser, createUser, updateUser, deleteUser, login};
