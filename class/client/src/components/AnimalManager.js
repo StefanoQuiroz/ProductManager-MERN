@@ -4,17 +4,17 @@ import Swal from 'sweetalert2';
 import AnimalList from './AnimalList';
 import AnimalForm from './AnimalForm';
 import { Row } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const AnimalManager = () => {
 
-    //const {path, url} = useRouteMatch();
+    const {path, url} = useRouteMatch();
 
     const [datos, setDatos] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:8000/api/animales")
+        axios.get("/api/animales")
         .then(response => setDatos(response.data.data))
         .catch(err => Swal.fire({
             icon: 'error',
@@ -26,20 +26,20 @@ const AnimalManager = () => {
      return (
         <Row>
             <Router>
-            <Link to={`/crear`}>
+            <Link to={`${path}/crear`}>
                 <FontAwesomeIcon icon={faPlus}/>
             </Link>
                 <Switch>
-                    <Route path={`/crear`}>
+                    <Route path={`${path}/crear`}>
                         <AnimalForm crear={true}  datos={datos} setDatos={setDatos}/>
                     </Route>
-                    <Route path={`/ver/:id`}>
+                    <Route path={`${path}/ver/:id`}>
                         <AnimalForm ver={true}/>
                     </Route>
-                    <Route path={`/modificar/:id`} >
+                    <Route path={`${path}/:id`} >
                         <AnimalForm modificar={true} datos={datos} setDatos={setDatos}/>
                     </Route>
-                    <Route path={`/`}>
+                    <Route path={path}>
                         <AnimalList datos={datos} setDatos={setDatos}/>
                     </Route>
                 </Switch>

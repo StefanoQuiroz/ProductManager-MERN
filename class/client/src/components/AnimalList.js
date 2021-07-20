@@ -10,11 +10,11 @@ const AnimalList = (props) => {
     const { datos, setDatos} = props;
     const history = useHistory()
     const ver = (event, id) => {
-        history.push(`/ver/${id}`)
+        history.push(`/animales/ver/${id}`)
     }
 
     const modificar = (event, id) => {
-        history.push(`/modificar/${id}`);
+        history.push(`/animales/modificar/${id}`);
     }
 
     const borrar = (event, id) => {
@@ -25,7 +25,7 @@ const AnimalList = (props) => {
             showCancelButton: true
         }).then(result => {
             if(result){
-                axios.delete(` http://localhost:8000/api/animales/delete/${id}`)
+                axios.delete(`/api/animales/delete/${id}`)
                     .then(response => {
                         const deleteData = datos.filter(response => response._id !== id);
                         setDatos(deleteData);

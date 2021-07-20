@@ -27,7 +27,7 @@ const AnimalForm = (props) => {
     //const [tipo, setTipo] = useState([]);
     
     const volver = (event) => {
-        history.push(`/`);
+        history.push(`/animales`);
     }
 
     useEffect(()=>{
@@ -40,7 +40,7 @@ const AnimalForm = (props) => {
             })) */
         
         if(id){
-            axios.get(`http://localhost:8000/api/animales/${id}`)
+            axios.get(`/api/animales/${id}`)
                 .then(response => setInput(response.data.data))
                 .catch(err => Swal.fire({
                     icon: 'error',
@@ -53,7 +53,7 @@ const AnimalForm = (props) => {
 
     
     const editar = (event) => {
-        axios.put(`http://localhost:8000/api/animales/update/${id}`, input)
+        axios.put(`/api/animales/update/${id}`, input)
         .then(response => {
             const index = datos.findIndex( res => res._id === id);
             datos.splice(index, 1, input);//primero agrega lo reemplaza en el index
@@ -69,7 +69,7 @@ const AnimalForm = (props) => {
     }
     
     const crearAnimal = (event) => {
-        axios.post("http://localhost:8000/api/animales/new", input)
+        axios.post(`/api/animales/new`, input)
         .then(response => {
             if(response.data.data){
                 setDatos(datos.concat([response.data.data]));
