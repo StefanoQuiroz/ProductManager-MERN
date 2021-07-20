@@ -35,12 +35,20 @@ const findSingleUser = (req,res) => {
 }
 
 const createUser = (req,res) => {
-    Usuario.create(req.body)
-        .then(result => res.json({data:result}))
-        .catch(error => {
-            res.json({error:error, message:"Something went wrong"});
-            res.sendStatus(500)
-        })
+    //para evitar correos repetidos
+    Usuario.findOne({email: req.body.email})
+        .then(result => {
+            if(result){
+                res.json({error: true, message:"The emails is registered"})
+            } else {
+                Usuario.create(req.body)
+                    .then(result => res.json({data:result}))
+                    .catch(error => {
+                        res.json({error:error, message:"Something went wrong"});
+                        res.sendStatus(500)
+                    })
+            }
+        });
 }
 
 const updateUser = (req,res) => {
