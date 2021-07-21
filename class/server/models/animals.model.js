@@ -16,10 +16,23 @@ const AnimalSchema = new mongoose.Schema({
         required : [true, "seleccione el color del animal"]
     },
     tamanho : String,
-    fecha: Date
+    fecha: Date,
+    //tiene la informacion del Usuario
+    propietarioId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
     
 }, {timestamps:true});
+AnimalSchema.virtual('propietario' , {
+    ref: "User",
+    localField : "propietarioId",
+    foreignField: '_id'
+})
 
-const Animal = mongoose.model("animales", AnimalSchema);
+AnimalSchema.set("toObject", {virtuals: true});
+AnimalSchema.set("toJSON", {virtuals: true});
+
+const Animal = mongoose.model("Animal", AnimalSchema);
 
 module.exports = Animal;
