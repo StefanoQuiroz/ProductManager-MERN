@@ -44,7 +44,7 @@ const AnimalForm = (props) => {
                 .then(response => setInput(response.data.data))
                 .catch(err => Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+                    title: 'Error editar',
                     text: `No se encuentra el tipo de animal con el id: ${id} requerido`
                 }))
         }

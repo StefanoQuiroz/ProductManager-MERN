@@ -4,15 +4,18 @@ import Swal from 'sweetalert2';
 import AnimalList from './AnimalList';
 import AnimalForm from './AnimalForm';
 import { Row } from 'reactstrap';
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch} from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { BrowserRouter as Router, Switch, Route, useRouteMatch} from 'react-router-dom';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { faPlus, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const AnimalManager = () => {
 
     const {path, url} = useRouteMatch();
 
     const [datos, setDatos] = useState([]);
+
+    const [actualizar, setActualizar] = useState(false);
+
     useEffect(() => {
         axios.get("/api/animales")
         .then(response => setDatos(response.data.data))
@@ -21,14 +24,11 @@ const AnimalManager = () => {
             title: 'Error al obtener los datos',
             text: 'Ocurrió un problema al intentar obtener el listado de animales'
         }));
-    }, [])
+    }, [actualizar])
 
      return (
         <Row>
             <Router>
-            <Link to={`${path}/crear`}>
-                <FontAwesomeIcon icon={faPlus}/>
-            </Link>
                 <Switch>
                     <Route path={`${path}/crear`}>
                         <AnimalForm crear={true}  datos={datos} setDatos={setDatos}/>
@@ -36,11 +36,11 @@ const AnimalManager = () => {
                     <Route path={`${path}/ver/:id`}>
                         <AnimalForm ver={true}/>
                     </Route>
-                    <Route path={`${path}/:id`} >
+                    <Route path={`${path}/modificar/:id`} >
                         <AnimalForm modificar={true} datos={datos} setDatos={setDatos}/>
                     </Route>
                     <Route path={path}>
-                        <AnimalList datos={datos} setDatos={setDatos}/>
+                        <AnimalList datos={datos} setDatos={setDatos} actualizar={actualizar} setActualizar={setActualizar}/>
                     </Route>
                 </Switch>
             </Router>
