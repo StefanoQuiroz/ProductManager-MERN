@@ -9,9 +9,9 @@ POST http://localhost:8000/api/usuarios/new
 Content-Type: application/json
 
 {
-    "nombre" : "Stefano",
-    "apellido" : "Quiroz", 
-    "email" : "stefano@gmail.com",
+    "nombre" : "User",
+    "apellido" : "User", 
+    "email" : "user@gmail.com",
     "password" : "123456789",
     "confirmPassword" : "123456789"
 }
@@ -21,9 +21,9 @@ PUT http://localhost:8000/api/usuarios/update/60f4fbea40509107bc5af591
 Content-Type: application/json
 
 {
-    "nombre" : "Stefano",
-    "apellido" : "Quirós", 
-    "email" : "stefano@gmail.com",
+    "nombre" : "User",
+    "apellido" : "User", 
+    "email" : "user@gmail.com",
     "password" : "123456789",
     "confirmPassword" : "123456789"
 }
@@ -35,9 +35,7 @@ DELETE http://localhost:8000/api/usuarios/delete/(id)
 POST http://localhost:8000/api/login
 Content-Type: application/json
 
-
 {
-    "email" : "piero@gmail.com",
+    "email" : "user@gmail.com",
     "password": "123456789"
-
 }

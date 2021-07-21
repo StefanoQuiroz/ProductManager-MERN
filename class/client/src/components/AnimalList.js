@@ -20,11 +20,11 @@ const AnimalList = (props) => {
     const borrar = (event, id) => {
         Swal.fire({
             icon: "warning",
-            title: "Eminar animal",
+            title: "Eliminar animal",
             text: "¿Esta seguro quedesea eliminar el animal?",
             showCancelButton: true
         }).then(result => {
-            if(result){
+            if(result.value){
                 axios.delete(`/api/animales/delete/${id}`)
                     .then(response => {
                         const deleteData = datos.filter(response => response._id !== id);
@@ -40,7 +40,7 @@ const AnimalList = (props) => {
     }
 
     const adoptar = (event, id) => {
-        axios.patch(`/api/animales/${id}/propietario`)
+        axios.patch(`/api/animales/${id}/propietario`, {})
             .then(response => {
                 if(response.data.error){
                     Swal.fire({
@@ -72,12 +72,12 @@ const AnimalList = (props) => {
                         <th>Tipo</th>
                         <th>Color</th>
                         <th>Tamaño</th>
-                        <th>Propietario</th>
+                        {/* <th>Propietario</th> */}
                         <th>Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {datos && datos.map((items, index) => (
+                    {datos.map((items, index) => (
                         <tr key={index}>
                             <td>
                                 <Button color="primary" style={{margin:'2px'}} onClick={(event) => ver(event, items._id)}><FontAwesomeIcon icon={faEye}/> Ver</Button>
@@ -89,7 +89,7 @@ const AnimalList = (props) => {
                             <td>{items.tipo}</td>
                             <td>{items.color}</td>
                             <td>{items.tamanho}</td>
-                            <td>{items.propietario.length>0?items.propietario[0].nombre:''}</td>
+                            {/* <td>{items.propietario}</td> */}
                             <td>{items.fecha}</td>
                         </tr>
                     ))}

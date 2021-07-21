@@ -27,7 +27,7 @@ const AnimalForm = (props) => {
     //const [tipo, setTipo] = useState([]);
     
     const volver = (event) => {
-        history.push(`/animales`);
+        history.push('/animales');
     }
 
     useEffect(()=>{
@@ -71,8 +71,9 @@ const AnimalForm = (props) => {
     const crearAnimal = (event) => {
         axios.post(`/api/animales/new`, input)
         .then(response => {
-            if(response.data.data){
+            if(response.data && response.data.data){
                 setDatos(datos.concat([response.data.data]));
+                //datos.concat([response.data.data])
                 volver(event);
             } else {
                 Swal.fire({
@@ -105,11 +106,11 @@ const AnimalForm = (props) => {
         } else{
             crearAnimal(event);
         }
-        useNombre.current.value="";
+       /*  useNombre.current.value="";
         useTipo.current.value="";
         useColor.current.value="";
         useTamanho.current.value="";
-        useFecha.current.value="";
+        useFecha.current.value=""; */
     }
 
 
@@ -118,62 +119,64 @@ const AnimalForm = (props) => {
             <Row>
                 <h1>{ver ? `Ver ${input.nombre}` : (modificar ? `Editar ${input.nombre}` : `Nuevo Animal`)}</h1>
             </Row>
-            <Form onSubmit={onSubmit}>
-            <Row form>
-                <Col md={6}>
-                    <FormGroup>
-                        <Label for="nombre">Nombre del Animal</Label>
-                        <Input ref={useNombre} type="text" name="nombre" id="nombre" value={input.nombre} onChange={onChange} disabled={ver}/>
-                    </FormGroup>
-                </Col>
-                <Col md={6}>
-                    <FormGroup>
-                        <Label for="tipo">Tipo del Animal</Label>
-                        <Input ref={useTipo} type="text" name="tipo" id="tipo" value={input.tipo} onChange={onChange} disabled={ver}/>
-                        {/* <Input ref={useTipo} type="select" name="tipo" id="tipo" value={input.tipo} onChange={onChange} disabled={ver}>
-                            {tipo && tipo.map((options, index)=>(
-                            <option key={index} value={options.tipo}>
-                                {options.tipo}
-                            </option>))}
-                        </Input> */}
-                    </FormGroup>
-                </Col>
-                </Row>             
-            <Row form>
-                <Col md={6}>
-                    <FormGroup>
-                        <Label for="color">Color del Animal</Label>
-                        <Input ref={useColor} type="text" name="color" id="color" value={input.color} onChange={onChange} disabled={ver}/>
-                    </FormGroup>
-                </Col>
-                <Col md={6}>
-                    <FormGroup>
-                        <Label for="tam">Tamaño del Animal</Label>
-                        <Input ref={useTamanho} type="select" name="tamanho" id="tam" value={input.tamanho} onChange={onChange} disabled={ver}>
-                            <option>Seleccione</option>
-                            <option value="Pequeño">Pequeño</option>
-                            <option value="Mediano">Mediano</option>
-                            <option value="Grande">Grande</option>
-                        </Input>
-                    </FormGroup>
-                </Col>
-                </Row>
+            <Col md={6}>
+                <Form onSubmit={onSubmit}>
                 <Row form>
                     <Col md={6}>
                         <FormGroup>
-                            <Label for="fecha">Fecha</Label>
-                            <Input ref={useFecha} type="datetime-local" name="fecha" id="fecha" value={input.fecha} onChange={onChange} disabled={ver}/>
+                            <Label for="nombre">Nombre del Animal</Label>
+                            <Input ref={useNombre} type="text" name="nombre" id="nombre" value={input.nombre} onChange={onChange} disabled={ver}/>
                         </FormGroup>
                     </Col>
-                </Row>
-                <Row form>
-                    <Col>
-                        { crear && <Button style={{margin:'2px'}} type="submit">Crear</Button>}
-                        { modificar && <Button style={{margin:'2px'}} type="submit">Modificar</Button>}
-                        <Button style={{margin:'2px'}} type="button" onClick={(event) => volver(event)}>Home</Button>
+                    <Col md={6}>
+                        <FormGroup>
+                            <Label for="tipo">Tipo del Animal</Label>
+                            <Input ref={useTipo} type="text" name="tipo" id="tipo" value={input.tipo} onChange={onChange} disabled={ver}/>
+                            {/* <Input ref={useTipo} type="select" name="tipo" id="tipo" value={input.tipo} onChange={onChange} disabled={ver}>
+                                {tipo && tipo.map((options, index)=>(
+                                <option key={index} value={options.tipo}>
+                                    {options.tipo}
+                                </option>))}
+                            </Input> */}
+                        </FormGroup>
                     </Col>
-                </Row>             
-            </Form>
+                    </Row>             
+                <Row form>
+                    <Col md={6}>
+                        <FormGroup>
+                            <Label for="color">Color del Animal</Label>
+                            <Input ref={useColor} type="text" name="color" id="color" value={input.color} onChange={onChange} disabled={ver}/>
+                        </FormGroup>
+                    </Col>
+                    <Col md={6}>
+                        <FormGroup>
+                            <Label for="tam">Tamaño del Animal</Label>
+                            <Input ref={useTamanho} type="select" name="tamanho" id="tam" value={input.tamanho} onChange={onChange} disabled={ver}>
+                                <option>Seleccione</option>
+                                <option value="Pequeño">Pequeño</option>
+                                <option value="Mediano">Mediano</option>
+                                <option value="Grande">Grande</option>
+                            </Input>
+                        </FormGroup>
+                    </Col>
+                    </Row>
+                    <Row form>
+                        <Col md={6}>
+                            <FormGroup>
+                                <Label for="fecha">Fecha</Label>
+                                <Input ref={useFecha} type="datetime-local" name="fecha" id="fecha" value={input.fecha} onChange={onChange} disabled={ver}/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row form>
+                        <Col>
+                            { crear && <Button style={{margin:'2px'}} type="submit">Crear</Button>}
+                            { modificar && <Button style={{margin:'2px'}} type="submit">Modificar</Button>}
+                            <Button style={{margin:'2px'}} type="button" onClick={(event) => volver(event)}>Home</Button>
+                        </Col>
+                    </Row>             
+                </Form>
+            </Col>
         </Row>
     );
 }
