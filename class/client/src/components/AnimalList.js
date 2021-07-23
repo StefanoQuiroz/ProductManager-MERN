@@ -72,7 +72,7 @@ const AnimalList = (props) => {
                         <th>Tipo</th>
                         <th>Color</th>
                         <th>Tamaño</th>
-                        {/* <th>Propietario</th> */}
+                        <th>Propietario</th>
                         <th>Fecha</th>
                     </tr>
                 </thead>
@@ -89,7 +89,7 @@ const AnimalList = (props) => {
                             <td>{items.tipo}</td>
                             <td>{items.color}</td>
                             <td>{items.tamanho}</td>
-                            {/* <td>{items.propietario}</td> */}
+                            <td>{(items.propietario.length>0)? items.propietario[0].nombre : ''}</td>
                             <td>{items.fecha}</td>
                         </tr>
                     ))}

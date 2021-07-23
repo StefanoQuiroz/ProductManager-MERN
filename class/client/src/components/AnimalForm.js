@@ -21,7 +21,7 @@ const AnimalForm = (props) => {
         tipo: "",
         color: "",
         tamanho: "",
-        fecha: new Date()
+        fecha: new Date().toDateString()
     });
        
     //const [tipo, setTipo] = useState([]);
@@ -41,7 +41,17 @@ const AnimalForm = (props) => {
         
         if(id){
             axios.get(`/api/animales/${id}`)
-                .then(response => setInput(response.data.data))
+                .then(response => {
+                    console.log('Data', response.data.data);
+                    //Data {_id: "60f755cb6457d72708c05450", nombre: "Tommy", tipo: "Gato", color: "Gris", tamanho: "Mediano", …}
+                    let fechaValor = new Date();
+                    if(response.data.data.fecha){
+                        fechaValor = new Date(response.data.data.fecha)
+                    }
+                    console.log('Fecha', fechaValor.toDateString());
+                    //Fecha Fri Jul 23 2021
+                    setInput({...response.data.data, ['fecha'] : fechaValor.toDateString()})
+                })
                 .catch(err => Swal.fire({
                     icon: 'error',
                     title: 'Error editar',
@@ -164,7 +174,7 @@ const AnimalForm = (props) => {
                         <Col md={6}>
                             <FormGroup>
                                 <Label for="fecha">Fecha</Label>
-                                <Input ref={useFecha} type="datetime-local" name="fecha" id="fecha" value={input.fecha} onChange={onChange} disabled={ver}/>
+                                <Input ref={useFecha} type="date" name="fecha" id="fecha" value={input.fecha} onChange={onChange} disabled={ver}/>
                             </FormGroup>
                         </Col>
                     </Row>
